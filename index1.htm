@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переміщення об'єктів</title>
+    <style>
+        .draggable {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            cursor: pointer;
+        }
+        #obj1 {
+            background-color: red;
+        }
+        #obj2 {
+            background-color: green;
+        }
+        #obj3 {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="obj1" class="draggable"></div>
+    <div id="obj2" class="draggable"></div>
+    <div id="obj3" class="draggable"></div>
+
+    <script>
+        // Функція для додавання можливості переміщення
+        function makeDraggable(element) {
+            let offsetX, offsetY;
+
+            element.onmousedown = function(e) {
+                offsetX = e.clientX - element.getBoundingClientRect().left;
+                offsetY = e.clientY - element.getBoundingClientRect().top;
+
+                document.onmousemove = function(e) {
+                    element.style.left = e.clientX - offsetX + 'px';
+                    element.style.top = e.clientY - offsetY + 'px';
+                };
+
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+            };
+        }
+
+        // Дозволяємо переміщати всі об'єкти
+        makeDraggable(document.getElementById('obj1'));
+        makeDraggable(document.getElementById('obj2'));
+        makeDraggable(document.getElementById('obj3'));
+    </script>
+
+</body>
+</html>
